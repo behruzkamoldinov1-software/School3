@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eikra – Education WordPress Theme</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',sans-serif;color:#444;background:#fff;overflow-x:hidden;font-size:14px}
+a{text-decoration:none;color:inherit;transition:color .2s}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* ===== TOPBAR ===== */
+.topbar{background:#172b4d;color:#ccc;font-size:13px;padding:10px 0}
+.topbar .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.topbar-left{display:flex;gap:24px;align-items:center}
+.topbar-left span{display:flex;align-items:center;gap:7px;color:#ccc}
+.topbar-left i{color:#f0c040}
+.topbar-right{display:flex;align-items:center;gap:18px}
+.topbar-right a{color:#ccc;font-size:13px}
+.topbar-right a:hover{color:#f0c040}
+.topbar-right .login-link{display:flex;align-items:center;gap:6px}
+.topbar-right .socials{display:flex;gap:10px}
+.topbar-right .socials a{color:#ccc;font-size:14px}
+.topbar-right .socials a:hover{color:#f0c040}
+.topbar-divider{color:#555;margin:0 4px}
+
+/* ===== HEADER ===== */
+header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.header-wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;align-items:center;height:70px;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-circle{width:42px;height:42px;background:#172b4d;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-circle i{color:#f0c040;font-size:18px}
+.logo-name{font-family:'Raleway',sans-serif;font-size:22px;font-weight:900;color:#172b4d;letter-spacing:1px}
+.search-box{display:flex;align-items:center;border:1px solid #ddd;border-radius:3px;overflow:hidden;flex:0 0 280px}
+.search-box input{border:none;outline:none;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;width:100%;color:#444}
+.search-box button{background:#f0c040;border:none;padding:8px 14px;cursor:pointer;font-size:14px;color:#fff}
+.search-box button:hover{background:#d4a800}
+
+nav{display:flex;align-items:center;flex:1;gap:0}
+.nav-item{position:relative}
+.nav-item>a{padding:0 14px;font-size:13px;font-weight:600;color:#333;display:flex;align-items:center;gap:5px;height:70px;line-height:70px;white-space:nowrap;font-family:'Open Sans',sans-serif}
+.nav-item>a:hover,.nav-item.active>a{color:#f0c040}
+.nav-item.active>a{border-bottom:3px solid #f0c040}
+.nav-item i{font-size:10px}
+
+/* category grid button */
+.cat-grid-btn{background:none;border:none;cursor:pointer;padding:0 14px;color:#333;font-size:18px;height:70px;display:flex;align-items:center}
+.cat-grid-btn:hover{color:#f0c040}
+
+.header-cart{margin-left:auto;position:relative;cursor:pointer;padding:0 6px}
+.header-cart i{font-size:20px;color:#333}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:#f0c040;color:#fff;font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ===== HERO SLIDER ===== */
+.hero{position:relative;height:580px;overflow:hidden}
+.hero-slide{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=80') center/cover no-repeat}
+.hero-overlay{position:absolute;inset:0;background:rgba(10,20,45,.55)}
+.hero-content{position:absolute;inset:0;display:flex;align-items:center;padding:0 80px}
+.hero-text{max-width:560px;color:#fff}
+.hero-text .sub{font-size:13px;color:#f0c040;font-weight:600;letter-spacing:1px;margin-bottom:14px;text-transform:uppercase}
+.hero-text h1{font-family:'Raleway',sans-serif;font-size:46px;font-weight:800;line-height:1.2;color:#fff;margin-bottom:18px}
+.hero-text p{font-size:14px;color:rgba(255,255,255,.8);line-height:1.8;margin-bottom:10px;max-width:420px}
+.hero-text p.small{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:28px}
+.hero-btn{display:inline-block;background:#f0c040;color:#fff;padding:12px 32px;font-size:14px;font-weight:700;border-radius:2px;text-transform:uppercase;letter-spacing:.5px}
+.hero-btn:hover{background:#d4a800;color:#fff}
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10}
+.hero-arrow:hover{background:rgba(255,255,255,.3)}
+.hero-arrow.prev{left:16px}
+.hero-arrow.next{right:16px}
+.hero-dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.hero-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;border:none}
+.hero-dot.active{background:#f0c040}
+
+/* ===== FEATURE BOXES ===== */
+.feature-boxes{background:#172b4d}
+.feature-boxes .wrap{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.feat-box{padding:30px 36px;display:flex;align-items:center;gap:20px;border-right:1px solid rgba(255,255,255,.1)}
+.feat-box:last-child{border-right:none}
+.feat-box-icon{font-size:38px;color:#f0c040;flex-shrink:0}
+.feat-box-text h4{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;font-family:'Raleway',sans-serif}
+.feat-box-text p{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+
+/* ===== WELCOME SECTION ===== */
+.welcome{padding:80px 0}
+.welcome .wrap{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.welcome-text h2{font-family:'Raleway',sans-serif;font-size:36px;font-weight:800;color:#172b4d;margin-bottom:20px}
+.welcome-text .lead{font-size:14px;color:#333;font-weight:600;line-height:1.7;margin-bottom:16px}
+.welcome-text p{font-size:14px;color:#666;line-height:1.8;margin-bottom:24px}
+.btn-yellow{display:inline-block;background:#f0c040;color:#fff;padding:11px 28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-radius:2px}
+.btn-yellow:hover{background:#d4a800;color:#fff}
+.welcome-img{overflow:hidden;border-radius:2px}
+.welcome-img img{width:100%;height:420px;object-fit:cover}
+
+/* ===== FEATURED COURSES ===== */
+.section-courses{padding:60px 0 80px;background:#f5f6f8}
+.section-courses .wrap{max-width:1200px;margin:auto;padding:0 20px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px}
+.section-head h2{font-family:'Raleway',sans-serif;font-size:28px;font-weight:800;color:#172b4d}
+.slider-arrows{display:flex;gap:8px}
+.sarrow{width:36px;height:36px;background:#f0c040;border:none;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:2px}
+.sarrow:hover{background:#d4a800}
+.courses-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.course-card{background:#fff;border:1px solid #e8e8e8;border-radius:2px;overflow:hidden;transition:box-shadow .3s}
+.course-card:hover{box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.course-thumb{position:relative}
+.course-thumb img{width:100%;height:180px;object-fit:cover}
+.price-tag{position:absolute;top:14px;right:14px;background:#f0c040;color:#fff;font-size:13px;font-weight:700;padding:4px 10px;border-radius:2px}
+.price-tag.free{background:#f0c040}
+.course-body{padding:16px}
+.course-body h3{font-family:'Raleway',sans-serif;font-size:15px;font-weight:700;color:#172b4d;margin-bottom:10px;line-height:1.4}
+.course-body h3 a:hover{color:#f0c040}
+.course-body p{font-size:12px;color:#777;line-height:1.6;margin-bottom:14px}
+.course-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #f0f0f0}
+.course-author{display:flex;align-items:center;gap:8px}
+.course-author img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+.course-meta-right{display:flex;align-items:center;gap:12px}
+.course-meta-right span{display:flex;align-items:center;gap:4px;font-size:12px;color:#888}
+.course-meta-right i{font-size:12px;color:#aaa}
+
+/* ===== VIDEO SECTION ===== */
+.video-section{position:relative;height:440px;overflow:hidden}
+.video-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&q=80') center/cover no-repeat}
+.video-overlay{position:absolute;inset:0;background:rgba(15,28,58,.7)}
+.video-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px}
+.video-content h2{font-family:'Raleway',sans-serif;font-size:34px;font-weight:700;margin-bottom:16px}
+.video-content p{font-size:14px;color:rgba(255,255,255,.75);max-width:480px;line-height:1.7;margin-bottom:30px}
+.play-btn{width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#f0c040;font-size:22px;transition:all .3s}
+.play-btn:hover{background:rgba(255,255,255,.1);border-color:#fff}
+
+/* ===== STATS ===== */
+.stats-section{position:relative;padding:70px 0}
+.stats-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80') center/cover no-repeat}
+.stats-overlay{position:absolute;inset:0;background:rgba(15,28,58,.82)}
+.stats-section .wrap{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative;z-index:2}
+.stat-item{}
+.stat-num{font-family:'Raleway',sans-serif;font-size:56px;font-weight:800;color:#fff;line-height:1}
+.stat-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;line-height:1.3}
+.stat-line{width:50px;height:3px;background:#f0c040;margin-top:12px}
+
+/* ===== INSTRUCTORS ===== */
+.instructors{padding:70px 0}
+.instructors .wrap{max-width:1200px;margin:auto;padding:0 20px}
+.instructors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.instructor-card{background:#fff}
+.instructor-card img{width:100%;height:240px;object-fit:cover;display:block;filter:grayscale(20%)}
+.instructor-info{padding:16px 0}
+.instructor-info h4{font-family:'Raleway',sans-serif;font-size:17px;font-weight:700;color:#172b4d;margin-bottom:4px}
+.instructor-info .role{font-size:13px;color:#888;margin-bottom:10px}
+.inst-line{width:36px;height:3px;background:#f0c040}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials{padding:70px 0;background:#fff}
+.testimonials .wrap{max-width:1200px;margin:auto;padding:0 20px}
+.testimonials h2{font-family:'Raleway',sans-serif;font-size:28px;font-weight:800;color:#172b4d;text-align:center;margin-bottom:48px}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.testi-item{display:flex;gap:24px;align-items:flex-start}
+.testi-avatar{flex-shrink:0;width:70px}
+.testi-avatar img{width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid #f0c040}
+.testi-body{}
+.testi-author-name{font-family:'Raleway',sans-serif;font-size:16px;font-weight:700;color:#172b4d}
+.testi-author-role{font-size:12px;color:#888;margin-bottom:12px}
+.testi-body p{font-size:13px;color:#666;line-height:1.8;font-style:italic}
+
+/* ===== LATEST POSTS + EVENTS ===== */
+.news-events{padding:70px 0;background:#f5f6f8}
+.news-events .wrap{max-width:1200px;margin:auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.ne-col h2{font-family:'Raleway',sans-serif;font-size:22px;font-weight:800;color:#172b4d;margin-bottom:8px}
+.ne-col .ne-line{width:36px;height:3px;background:#f0c040;margin-bottom:28px}
+
+/* posts */
+.post-item{display:flex;gap:16px;margin-bottom:24px;background:#fff;padding:16px;border:1px solid #eee}
+.post-thumb img{width:90px;height:70px;object-fit:cover;flex-shrink:0}
+.post-content h4{font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;color:#172b4d;margin-bottom:5px;line-height:1.4}
+.post-content h4 a:hover{color:#f0c040}
+.post-date{font-size:12px;color:#f0c040;font-weight:600;margin-bottom:6px}
+.post-content p{font-size:12px;color:#777;line-height:1.6}
+.btn-dark{display:inline-block;background:#172b4d;color:#fff;padding:11px 28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:10px}
+.btn-dark:hover{background:#1e3a6e;color:#fff}
+
+/* events */
+.event-item{display:flex;gap:16px;margin-bottom:20px;background:#fff;border:1px solid #eee;padding:16px}
+.event-date-box{flex-shrink:0;width:70px;background:#f0c040;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px;position:relative}
+.event-date-box::before,.event-date-box::after{content:'';position:absolute;width:10px;height:10px;background:#172b4d;border-radius:50%;top:-5px}
+.event-date-box::before{left:8px}
+.event-date-box::after{right:8px}
+.event-date-box .day{font-family:'Raleway',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1}
+.event-date-box .month{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase}
+.event-date-box .year{font-size:11px;font-weight:700;color:#172b4d;background:#fff;width:100%;text-align:center;padding:2px 0;margin-top:6px}
+.event-content h4{font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;color:#172b4d;margin-bottom:6px;line-height:1.4}
+.event-content h4 a:hover{color:#f0c040}
+.event-content p{font-size:12px;color:#777;line-height:1.6;margin-bottom:6px}
+.event-time{font-size:12px;color:#555;font-weight:600}
+.event-time i{color:#f0c040;margin-right:4px}
+
+/* ===== PARTNERS ===== */
+.partners{padding:40px 0;background:#fff;border-top:1px solid #eee;border-bottom:1px solid #eee}
+.partners .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:24px}
+.partner-logo{opacity:.5;transition:opacity .2s;filter:grayscale(100%);display:flex;align-items:center;gap:8px}
+.partner-logo:hover{opacity:1;filter:none}
+.partner-logo span{font-family:'Raleway',sans-serif;font-size:16px;font-weight:800;color:#172b4d;text-transform:uppercase;letter-spacing:1px}
+.partner-logo i{font-size:24px;color:#172b4d}
+
+/* ===== FOOTER ===== */
+footer{background:#172b4d;padding:60px 0 0}
+.footer-grid{max-width:1200px;margin:auto;padding:0 20px 50px;display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:40px}
+.footer-col h3{font-family:'Raleway',sans-serif;font-size:17px;font-weight:800;color:#fff;margin-bottom:10px}
+.footer-col .f-line{width:34px;height:3px;background:#f0c040;margin-bottom:22px}
+.footer-col ul li{margin-bottom:10px}
+.footer-col ul li a{font-size:13px;color:rgba(255,255,255,.65);transition:color .2s}
+.footer-col ul li a:hover{color:#f0c040}
+.footer-contact-item{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.footer-contact-item i{color:#f0c040;font-size:14px;margin-top:3px;flex-shrink:0}
+.footer-contact-item .fc-label{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:2px}
+.footer-contact-item .fc-val{font-size:13px;color:#fff;font-weight:600}
+.footer-newsletter p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:16px}
+.newsletter-form{display:flex;flex-direction:column;gap:10px}
+.newsletter-form input{padding:11px 14px;border:none;outline:none;font-size:13px;font-family:'Open Sans',sans-serif;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.newsletter-form input::placeholder{color:rgba(255,255,255,.4)}
+.newsletter-form button{background:#f0c040;color:#fff;border:none;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;font-family:'Open Sans',sans-serif}
+.newsletter-form button:hover{background:#d4a800}
+
+.footer-bottom-social{border-top:1px solid rgba(255,255,255,.1);padding:24px 0}
+.footer-bottom-social .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:center;gap:12px}
+.footer-bottom-social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:15px;transition:all .2s}
+.footer-bottom-social a:hover{background:#f0c040;color:#fff}
+
+.footer-bottom-bar{border-top:1px solid rgba(255,255,255,.08);padding:20px}
+.footer-bottom-bar .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{display:flex;align-items:center;gap:10px}
+.footer-logo .logo-circle{width:36px;height:36px}
+.footer-logo .logo-circle i{font-size:15px}
+.footer-logo-name{font-family:'Raleway',sans-serif;font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.5)}
+.footer-copy a{color:rgba(255,255,255,.7)}
+.footer-copy a:hover{color:#f0c040}
+
+/* scroll to top */
+.scroll-top{position:fixed;bottom:28px;right:28px;width:42px;height:42px;background:#f0c040;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;cursor:pointer;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:background .2s}
+.scroll-top:hover{background:#d4a800}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .courses-grid{grid-template-columns:repeat(2,1fr)}
+  .instructors-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stats-section .wrap{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .topbar-left{display:none}
+  .search-box{display:none}
+  nav .nav-item:not(:first-child){display:none}
+  .hero-content{padding:0 30px}
+  .hero-text h1{font-size:30px}
+  .feature-boxes .wrap{grid-template-columns:1fr}
+  .welcome .wrap{grid-template-columns:1fr}
+  .courses-grid{grid-template-columns:1fr}
+  .instructors-grid{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .news-events .wrap{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .stats-section .wrap{grid-template-columns:1fr 1fr}
+  .footer-bottom-bar .wrap{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbar-left">
+      <span><i class="fas fa-map-marker-alt"></i> 1PO Box, Collins Street West, Australia</span>
+      <span><i class="fas fa-envelope"></i> info@example.com</span>
+      <span><i class="fas fa-phone"></i> +61383766284</span>
+    </div>
+    <div class="topbar-right">
+      <a href="#" class="login-link"><i class="fas fa-user"></i> Login / Register</a>
+      <span class="topbar-divider">|</span>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fas fa-rss"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-wrap">
+    <div class="logo">
+      <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
+      <span class="logo-name">EIKRA</span>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Search..."/>
+      <button><i class="fas fa-search"></i></button>
+    </div>
+    <button class="cat-grid-btn"><i class="fas fa-th"></i></button>
+    <nav>
+      <div class="nav-item"><a href="#">Category <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item active"><a href="#">Home <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">Pages <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">Elements <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">Courses <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">Reasearch <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">News <i class="fas fa-chevron-down"></i></a></div>
+      <div class="nav-item"><a href="#">Contact <i class="fas fa-chevron-down"></i></a></div>
+    </nav>
+    <div class="header-cart">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-badge">0</span>
+    </div>
+  </div>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="hero-slide"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="sub">Welcome to Eikra Education</p>
+      <h1>Best Education Wordpress<br>Theme For 2018</h1>
+      <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+      <p class="small">when an unknown printer took a galley of type and scrambled it to make a dummy text ever</p>
+      <a href="#" class="hero-btn">Get Started</a>
+    </div>
+  </div>
+  <button class="hero-arrow prev"><i class="fas fa-chevron-left"></i></button>
+  <button class="hero-arrow next"><i class="fas fa-chevron-right"></i></button>
+  <div class="hero-dots">
+    <button class="hero-dot active"></button>
+    <button class="hero-dot"></button>
+    <button class="hero-dot"></button>
+  </div>
+</section>
+
+<!-- FEATURE BOXES -->
+<div class="feature-boxes">
+  <div class="wrap">
+    <div class="feat-box">
+      <div class="feat-box-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="feat-box-text">
+        <h4>Scholarship Facility</h4>
+        <p>Simply dummy text of the printing and typesetting industry standard.</p>
+      </div>
+    </div>
+    <div class="feat-box">
+      <div class="feat-box-icon"><i class="fas fa-user-tie"></i></div>
+      <div class="feat-box-text">
+        <h4>Skilled Lecturers</h4>
+        <p>Simply dummy text of the printing and typesetting industry standard.</p>
+      </div>
+    </div>
+    <div class="feat-box">
+      <div class="feat-box-icon"><i class="fas fa-book"></i></div>
+      <div class="feat-box-text">
+        <h4>Book Library &amp; Store</h4>
+        <p>Simply dummy text of the printing and typesetting industry standard.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WELCOME CAMPUS -->
+<section class="welcome">
+  <div class="wrap">
+    <div class="welcome-text">
+      <h2>Welcome To Our Campus</h2>
+      <p class="lead">Tmply dummy text of the printing and typesetting industry. Lorem Ipsum has been theindustry's standard.</p>
+      <p>Smply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Smply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's when an unknown printerit to make a type specimen book.</p>
+      <a href="#" class="btn-yellow">READ MORE</a>
+    </div>
+    <div class="welcome-img">
+      <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80" alt="Campus students"/>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED COURSES -->
+<section class="section-courses">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Featured Courses</h2>
+      <div class="slider-arrows">
+        <button class="sarrow"><i class="fas fa-chevron-left"></i></button>
+        <button class="sarrow"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="courses-grid">
+
+      <div class="course-card">
+        <div class="course-thumb">
+          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&q=80" alt="Course"/>
+          <span class="price-tag">$51.00</span>
+        </div>
+        <div class="course-body">
+          <h3><a href="#">Master Microservices with Spring Boot and Cloud</a></h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...</p>
+          <div class="course-footer">
+            <div class="course-author">
+              <img src="https://i.pravatar.cc/60?img=10" alt=""/>
+            </div>
+            <div class="course-meta-right">
+              <span><i class="far fa-heart"></i></span>
+              <span><i class="fas fa-users"></i> 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-thumb">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&q=80" alt="Course"/>
+          <span class="price-tag">$89.00</span>
+        </div>
+        <div class="course-body">
+          <h3><a href="#">The Complete JavaScript Course for Beginner</a></h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...</p>
+          <div class="course-footer">
+            <div class="course-author">
+              <img src="https://i.pravatar.cc/60?img=11" alt=""/>
+            </div>
+            <div class="course-meta-right">
+              <span><i class="far fa-heart"></i></span>
+              <span><i class="fas fa-users"></i> 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-thumb">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&q=80" alt="Course"/>
+          <span class="price-tag free">Free</span>
+        </div>
+        <div class="course-body">
+          <h3><a href="#">Learn PHP Programming From Scratch</a></h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...</p>
+          <div class="course-footer">
+            <div class="course-author">
+              <img src="https://i.pravatar.cc/60?img=12" alt=""/>
+            </div>
+            <div class="course-meta-right">
+              <span><i class="far fa-heart"></i></span>
+              <span><i class="fas fa-users"></i> 44</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-thumb">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80" alt="Course"/>
+          <span class="price-tag">$25.00</span>
+        </div>
+        <div class="course-body">
+          <h3><a href="#">Learning Python for Data Analysis and Visualization</a></h3>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...</p>
+          <div class="course-footer">
+            <div class="course-author">
+              <img src="https://i.pravatar.cc/60?img=13" alt=""/>
+            </div>
+            <div class="course-meta-right">
+              <span><i class="far fa-heart"></i></span>
+              <span><i class="fas fa-users"></i> 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+  <div class="video-bg"></div>
+  <div class="video-overlay"></div>
+  <div class="video-content">
+    <h2>Watch Campus Life Video Tour</h2>
+    <p>Lorem ipsum text of the printing and typesetting industryorem ever since industry standard dum an unknowramble</p>
+    <button class="play-btn"><i class="fas fa-play"></i></button>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-bg"></div>
+  <div class="stats-overlay"></div>
+  <div class="wrap">
+    <div class="stat-item">
+      <div class="stat-num">50</div>
+      <div class="stat-label">Professional<br>Instructors</div>
+      <div class="stat-line"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">87</div>
+      <div class="stat-label">New Courses Every<br>Year</div>
+      <div class="stat-line"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">25</div>
+      <div class="stat-label">Live Sessions Every<br>Month</div>
+      <div class="stat-line"></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">277</div>
+      <div class="stat-label">Registered<br>Students</div>
+      <div class="stat-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTORS -->
+<section class="instructors">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 style="color:#f0c040">Our Skilled Instructors</h2>
+      <div class="slider-arrows">
+        <button class="sarrow"><i class="fas fa-chevron-left"></i></button>
+        <button class="sarrow"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="instructors-grid">
+      <div class="instructor-card">
+        <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&q=80" alt="Mike Hussy"/>
+        <div class="instructor-info">
+          <h4>Mike Hussy</h4>
+          <div class="role">Android Programmer</div>
+          <div class="inst-line"></div>
+        </div>
+      </div>
+      <div class="instructor-card">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80" alt="Tom Steven"/>
+        <div class="instructor-info">
+          <h4>Tom Steven</h4>
+          <div class="role">Data Scientist</div>
+          <div class="inst-line"></div>
+        </div>
+      </div>
+      <div class="instructor-card">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Daziy Millar"/>
+        <div class="instructor-info">
+          <h4>Daziy Millar</h4>
+          <div class="role">PHP Expert</div>
+          <div class="inst-line"></div>
+        </div>
+      </div>
+      <div class="instructor-card">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Rosy Janner"/>
+        <div class="instructor-info">
+          <h4>Rosy Janner</h4>
+          <div class="role">WordPress Ninja</div>
+          <div class="inst-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="wrap">
+    <h2>What Our Students Say</h2>
+    <div class="testi-grid">
+      <div class="testi-item">
+        <div style="flex:1">
+          <div class="testi-author-name">Tony Walker</div>
+          <div class="testi-author-role">Apps Developer</div>
+          <p>I thoroughly enjoyed courses here and hope to expand on my gained knowledge about making apps. The courses as well as the examples are well thought out and I feel it gave me a good overview and feel of a professional Apps developer.</p>
+        </div>
+        <div class="testi-avatar">
+          <img src="https://i.pravatar.cc/100?img=51" alt="Tony Walker"/>
+        </div>
+      </div>
+      <div class="testi-item">
+        <div style="flex:1">
+          <div class="testi-author-name">Martin Brian</div>
+          <div class="testi-author-role">UI Designer</div>
+          <p>The courses here exceeded my expectations in many regards, especially in the depth of information supplied. In every non-threatening environment I was taught the skills needed to get started in UI design professionally.</p>
+        </div>
+        <div class="testi-avatar">
+          <img src="https://i.pravatar.cc/100?img=52" alt="Martin Brian"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST POSTS + UPCOMING EVENTS -->
+<section class="news-events">
+  <div class="wrap">
+    <!-- Latest Posts -->
+    <div class="ne-col">
+      <h2>Latest Posts</h2>
+      <div class="ne-line"></div>
+
+      <div class="post-item">
+        <div class="post-thumb">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&q=80" alt="Post"/>
+        </div>
+        <div class="post-content">
+          <div class="post-date">September 14, 2017</div>
+          <h4><a href="#">Summer Course Starts From 1st June</a></h4>
+          <p>Dimply dummy text of the printing and typesetting industry. Lorem Ipsum has been...</p>
+        </div>
+      </div>
+
+      <div class="post-item">
+        <div class="post-thumb">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&q=80" alt="Post"/>
+        </div>
+        <div class="post-content">
+          <div class="post-date">September 14, 2017</div>
+          <h4><a href="#">Guest Interview will Occur Soon in the Auditorium About Artificial Intelligence</a></h4>
+          <p>Dimply dummy text of the printing and typesetting industry. Lorem Ipsum has been...</p>
+        </div>
+      </div>
+
+      <div class="post-item">
+        <div class="post-thumb">
+          <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=200&q=80" alt="Post"/>
+        </div>
+        <div class="post-content">
+          <div class="post-date">September 14, 2017</div>
+          <h4><a href="#">New Exam Schedules for Diploma</a></h4>
+          <p>Dimply dummy text of the printing and typesetting industry. Lorem Ipsum has been...</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:16px">
+        <a href="#" class="btn-dark">VIEW ALL</a>
+      </div>
+    </div>
+
+    <!-- Upcoming Events -->
+    <div class="ne-col">
+      <h2>Upcoming Events</h2>
+      <div class="ne-line"></div>
+
+      <div class="event-item">
+        <div class="event-date-box">
+          <div class="day">20</div>
+          <div class="month">Oct</div>
+          <div class="year">2026</div>
+        </div>
+        <div class="event-content">
+          <h4><a href="#">SAT Implementation Workshops November 2026</a></h4>
+          <p>Bimply dummy text of the printing and typesetting istryrem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.when an unknown printer took a galley of type and scrambled...</p>
+          <div class="event-time"><i class="fas fa-clock"></i> 11:00 - 13:30</div>
+        </div>
+      </div>
+
+      <div class="event-item">
+        <div class="event-date-box">
+          <div class="day">21</div>
+          <div class="month">Oct</div>
+          <div class="year">2028</div>
+        </div>
+        <div class="event-content">
+          <h4><a href="#">National Capital Leadership 2028</a></h4>
+          <p>Bimply dummy text of the printing and typesetting istryrem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.when an unknown printer took a galley of type and scrambled...</p>
+          <div class="event-time"><i class="fas fa-clock"></i> 15:30 - 20:30</div>
+        </div>
+      </div>
+
+      <div style="text-align:right;margin-top:16px">
+        <a href="#" class="btn-dark">VIEW ALL</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div class="partners">
+  <div class="wrap">
+    <div class="partner-logo">
+      <i class="fas fa-book-open"></i>
+      <span>Education</span>
+    </div>
+    <div class="partner-logo">
+      <i class="fas fa-graduation-cap"></i>
+      <span>Education<br><small style="font-size:10px;font-weight:400;letter-spacing:0">company slogan</small></span>
+    </div>
+    <div class="partner-logo">
+      <i class="fas fa-laptop"></i>
+      <span>Online<br>Education</span>
+    </div>
+    <div class="partner-logo">
+      <i class="fas fa-globe"></i>
+      <span>OnlineEdu<br><small style="font-size:10px;font-weight:400;letter-spacing:0">.com</small></span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Company</h3>
+      <div class="f-line"></div>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Events</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Explore Courses</h3>
+      <div class="f-line"></div>
+      <ul>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Course Two</a></li>
+        <li><a href="#">Single Course</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Login/Register</a></li>
+        <li><a href="#">My account</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contacts</h3>
+      <div class="f-line"></div>
+      <div class="footer-contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <div class="fc-label">Location :</div>
+          <div class="fc-val">59 Street, Newyork City</div>
+        </div>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <div class="fc-label">Call Us :</div>
+          <div class="fc-val">+2123 5900036</div>
+        </div>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <div class="fc-label">Mail Us :</div>
+          <div class="fc-val">info@gmail.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col footer-newsletter">
+      <h3>Newsletter</h3>
+      <div class="f-line"></div>
+      <p>Fusce varittus, dolor tempor interdum tristiquei bibendum</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="E-mail"/>
+        <button>Subscribe Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom-social">
+    <div class="wrap">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-google-plus-g"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fas fa-rss"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <div class="wrap">
+      <div class="footer-logo">
+        <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
+        <span class="footer-logo-name">EIKRA</span>
+      </div>
+      <div class="footer-copy">© Copyright Eikra 2020. Designed and Developed by <a href="#">RadiusTheme</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<div class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<script>
+// Hero slider dots
+const dots = document.querySelectorAll('.hero-dot');
+dots.forEach((d,i)=>{
+  d.addEventListener('click',()=>{
+    dots.forEach(x=>x.classList.remove('active'));
+    d.classList.add('active');
+  });
+});
+
+// Hero arrows
+document.querySelector('.hero-arrow.next').addEventListener('click',()=>{
+  let active = [...dots].findIndex(d=>d.classList.contains('active'));
+  dots[active].classList.remove('active');
+  dots[(active+1)%dots.length].classList.add('active');
+});
+document.querySelector('.hero-arrow.prev').addEventListener('click',()=>{
+  let active = [...dots].findIndex(d=>d.classList.contains('active'));
+  dots[active].classList.remove('active');
+  dots[(active-1+dots.length)%dots.length].classList.add('active');
+});
+
+// Show/hide scroll-top
+window.addEventListener('scroll',()=>{
+  document.querySelector('.scroll-top').style.display = window.scrollY>300?'flex':'none';
+});
+document.querySelector('.scroll-top').style.display='none';
+</script>
+</body>
+</html>
