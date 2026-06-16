@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Контакты — Школа №1</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',sans-serif;color:#444;background:#fff;overflow-x:hidden;font-size:14px}
+a{text-decoration:none;color:inherit;transition:color .2s}
+img{max-width:100%;display:block}
+ul{list-style:none}
+
+/* TOPBAR */
+.topbar{background:#172b4d;color:#ccc;font-size:13px;padding:9px 0}
+.topbar .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.topbar-left{display:flex;gap:20px;align-items:center}
+.topbar-left span{display:flex;align-items:center;gap:6px;color:#ccc}
+.topbar-left i{color:#f0c040}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-right a{color:#ccc;font-size:13px;display:flex;align-items:center;gap:5px}
+.topbar-right a:hover{color:#f0c040}
+.topbar-right .socials{display:flex;gap:8px}
+.topbar-right .socials a{font-size:13px}
+
+/* HEADER */
+header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.header-wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;align-items:center;height:68px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}
+.logo-circle{width:40px;height:40px;background:#172b4d;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-circle i{color:#f0c040;font-size:17px}
+.logo-name{font-family:'Raleway',sans-serif;font-size:20px;font-weight:900;color:#172b4d;letter-spacing:1px}
+.search-box{display:flex;align-items:center;border:1px solid #ddd;border-radius:4px;overflow:hidden;flex:0 0 240px}
+.search-box input{border:none;outline:none;padding:7px 12px;font-size:13px;font-family:'Open Sans',sans-serif;width:100%;color:#444}
+.search-box button{background:#f0c040;border:none;padding:7px 12px;cursor:pointer;font-size:13px;color:#fff}
+.search-box button:hover{background:#d4a800}
+
+/* NAV */
+nav{display:flex;align-items:center;flex:1}
+.nav-item{position:relative}
+.nav-item>a{padding:0 13px;font-size:13px;font-weight:600;color:#333;display:flex;align-items:center;gap:4px;height:68px;white-space:nowrap;cursor:pointer;font-family:'Open Sans',sans-serif}
+.nav-item>a:hover,.nav-item.active>a{color:#f0c040}
+.nav-item.active>a{border-bottom:3px solid #f0c040}
+.nav-item i.arr{font-size:9px;transition:transform .2s}
+.nav-item:hover i.arr{transform:rotate(180deg)}
+
+/* DROPDOWN */
+.dropdown{position:absolute;top:68px;left:0;background:#fff;min-width:210px;box-shadow:0 8px 30px rgba(0,0,0,.12);border-top:3px solid #f0c040;border-radius:0 0 6px 6px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .22s;z-index:10000}
+.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown a{display:block;padding:11px 18px;font-size:13px;color:#333;font-weight:600;border-bottom:1px solid #f5f5f5;transition:background .15s,color .15s}
+.dropdown a:last-child{border-bottom:none}
+.dropdown a:hover{background:#f8f4e8;color:#f0c040}
+.dropdown a i{margin-right:8px;color:#f0c040;font-size:12px;width:14px}
+
+/* BURGER BUTTON */
+.burger-btn{display:none;background:none;border:none;cursor:pointer;padding:0 8px;color:#333;font-size:22px;height:68px;align-items:center;justify-content:center;margin-left:auto;flex-shrink:0}
+.burger-btn:hover{color:#f0c040}
+
+/* MOBILE MENU OVERLAY */
+.mobile-menu-overlay{position:fixed;inset:0;z-index:99998;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
+.mobile-menu-overlay.open{visibility:visible;opacity:1}
+.mobile-menu-overlay::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.mobile-menu-panel{position:absolute;top:0;left:0;bottom:0;width:min(320px,88vw);background:#172b4d;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.mobile-menu-overlay.open .mobile-menu-panel{transform:translateX(0)}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.mobile-menu-header .logo-name{color:#fff}
+.mobile-menu-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:6px}
+.mobile-menu-close:hover{color:#f0c040}
+.mobile-nav{flex:1;padding:16px 0;display:flex;flex-direction:column;align-items:stretch}
+.mobile-nav-item{display:flex;align-items:center;gap:12px;padding:14px 24px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:background .15s,color .15s;font-family:'Open Sans',sans-serif}
+.mobile-nav-item i{color:#f0c040;width:18px;text-align:center}
+.mobile-nav-item:hover{background:rgba(255,255,255,.07);color:#f0c040}
+.mobile-menu-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,.1)}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,#172b4d 0%,#1e3a6e 100%);padding:56px 0;text-align:center}
+.page-hero h1{font-family:'Raleway',sans-serif;font-size:36px;font-weight:800;color:#fff;margin-bottom:10px}
+.page-hero p{font-size:14px;color:rgba(255,255,255,.7);max-width:500px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+.breadcrumb a,.breadcrumb span{font-size:13px;color:rgba(255,255,255,.6)}
+.breadcrumb a:hover{color:#f0c040}
+.breadcrumb i{font-size:10px;color:rgba(255,255,255,.4)}
+
+/* CONTACT SECTION */
+.contact-section{padding:76px 0}
+.contact-section .wrap{max-width:1200px;margin:auto;padding:0 20px}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:56px}
+.contact-info h3{font-family:'Raleway',sans-serif;font-size:22px;font-weight:800;color:#172b4d;margin-bottom:20px}
+.contact-info-item{display:flex;gap:14px;margin-bottom:22px;align-items:flex-start}
+.contact-info-item .icon{width:42px;height:42px;background:#f0c040;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+.contact-info-item h5{font-size:13px;font-weight:700;color:#172b4d;margin-bottom:3px}
+.contact-info-item p{font-size:13px;color:#777;line-height:1.5}
+.contact-form h3{font-family:'Raleway',sans-serif;font-size:22px;font-weight:800;color:#172b4d;margin-bottom:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group textarea,.form-group select{width:100%;border:1px solid #ddd;border-radius:6px;padding:10px 14px;font-size:13px;color:#444;outline:none;font-family:'Open Sans',sans-serif}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#f0c040}
+.form-group textarea{height:120px;resize:vertical}
+.btn-submit{background:#172b4d;color:#fff;border:none;padding:12px 32px;font-size:13px;font-weight:700;border-radius:6px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;font-family:'Open Sans',sans-serif}
+.btn-submit:hover{background:#1e3a6e}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:#172b4d;color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;opacity:0;transform:translateY(10px);transition:all .3s;z-index:99999}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:26px;right:26px;width:40px;height:40px;background:#f0c040;border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:15px;cursor:pointer;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.scroll-top:hover{background:#d4a800}
+
+/* FOOTER */
+footer{background:#172b4d;padding:56px 0 0}
+.footer-grid{max-width:1200px;margin:auto;padding:0 20px 46px;display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:36px}
+.footer-col h3{font-family:'Raleway',sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
+.footer-col .f-line{width:32px;height:3px;background:#f0c040;margin-bottom:20px}
+.footer-col ul li{margin-bottom:9px}
+.footer-col ul li a{font-size:13px;color:rgba(255,255,255,.6);transition:color .2s}
+.footer-col ul li a:hover{color:#f0c040}
+.footer-contact-item{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start}
+.footer-contact-item i{color:#f0c040;font-size:13px;margin-top:2px;flex-shrink:0}
+.footer-contact-item .fc-label{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:1px}
+.footer-contact-item .fc-val{font-size:13px;color:#fff;font-weight:600}
+.footer-newsletter p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px}
+.newsletter-form{display:flex;flex-direction:column;gap:9px}
+.newsletter-form input{padding:10px 13px;border:none;outline:none;font-size:13px;font-family:'Open Sans',sans-serif;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:4px}
+.newsletter-form input::placeholder{color:rgba(255,255,255,.4)}
+.newsletter-form button{background:#f0c040;color:#fff;border:none;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;font-family:'Open Sans',sans-serif;border-radius:4px}
+.newsletter-form button:hover{background:#d4a800}
+.footer-bottom-social{border-top:1px solid rgba(255,255,255,.1);padding:20px 0}
+.footer-bottom-social .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:center;gap:10px}
+.footer-bottom-social a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:14px;transition:all .2s}
+.footer-bottom-social a:hover{background:#f0c040;color:#fff}
+.footer-bottom-bar{border-top:1px solid rgba(255,255,255,.08);padding:18px 20px}
+.footer-bottom-bar .wrap{max-width:1200px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{display:flex;align-items:center;gap:9px}
+.footer-logo .logo-circle{width:34px;height:34px}
+.footer-logo .logo-circle i{font-size:14px}
+.footer-logo-name{font-family:'Raleway',sans-serif;font-size:17px;font-weight:900;color:#fff;letter-spacing:1px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.5)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.nav-item>a{padding:0 9px;font-size:12px}}
+@media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr}.contact-grid{grid-template-columns:1fr}}
+@media(max-width:860px){nav{display:none}.burger-btn{display:flex}.search-box{display:none}}
+@media(max-width:768px){.topbar-left{display:none}.footer-grid{grid-template-columns:1fr}.page-hero h1{font-size:28px}.footer-bottom-bar .wrap{flex-direction:column;gap:10px;text-align:center}.form-row{grid-template-columns:1fr}}
+@media(max-width:480px){.page-hero h1{font-size:24px}.footer-grid{padding:32px 20px}.page-hero{padding:40px 20px}}
+
+/* BURGER */
+.burger-btn{display:none;background:none;border:none;cursor:pointer;color:#172b4d;font-size:20px;padding:8px;margin-left:auto;align-items:center;justify-content:center}
+/* MOBILE MENU */
+.mobile-menu-overlay{display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.5)}
+.mobile-menu-overlay.open{display:block}
+.mobile-menu-panel{position:absolute;top:0;left:0;bottom:0;width:min(320px,88vw);background:#172b4d;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.mobile-menu-overlay.open .mobile-menu-panel{transform:translateX(0)}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.mobile-menu-header .logo-name{color:#fff}
+.mobile-menu-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:6px}
+.mobile-menu-close:hover{color:#f0c040}
+.mobile-nav{flex:1;padding:16px 0;display:flex;flex-direction:column;align-items:stretch}
+.mobile-nav-item{display:flex;align-items:center;gap:12px;padding:14px 24px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:background .15s,color .15s;font-family:'Open Sans',sans-serif;text-decoration:none}
+.mobile-nav-item i{color:#f0c040;width:18px;text-align:center}
+.mobile-nav-item:hover{background:rgba(255,255,255,.07);color:#f0c040}
+.mobile-menu-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,.1)}
+@media(max-width:860px){
+  nav{display:none!important}
+  .burger-btn{display:flex!important}
+  .mobile-nav-item{min-height:52px;font-size:15px}
+}
+
+
+/* === MOBILE MENU FIX === */
+.mobile-menu-overlay{position:fixed!important;inset:0!important;z-index:99999!important;background:rgba(0,0,0,.5)!important;display:none!important;visibility:visible!important;opacity:1!important}
+.mobile-menu-overlay.open{display:block!important}
+.mobile-menu-overlay::before{display:none!important}
+.mobile-menu-panel{position:absolute!important;top:0!important;left:0!important;bottom:0!important;width:min(320px,88vw)!important;background:#172b4d!important;display:flex!important;flex-direction:column!important;transform:translateX(-100%)!important;transition:transform .32s cubic-bezier(.4,0,.2,1)!important;overflow-y:auto!important}
+.mobile-menu-overlay.open .mobile-menu-panel{transform:translateX(0)!important}
+.mobile-menu-header{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:16px 20px!important;border-bottom:1px solid rgba(255,255,255,.1)!important}
+.mobile-menu-header .logo-name{color:#fff!important}
+.mobile-menu-close{background:none!important;border:none!important;color:rgba(255,255,255,.7)!important;font-size:20px!important;cursor:pointer!important;padding:6px!important}
+.mobile-menu-close:hover{color:#f0c040!important}
+.mobile-nav{flex:1!important;padding:16px 0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+.mobile-nav-item{display:flex!important;align-items:center!important;gap:12px!important;padding:14px 24px!important;font-size:14px!important;font-weight:600!important;color:rgba(255,255,255,.8)!important;border-bottom:1px solid rgba(255,255,255,.07)!important;cursor:pointer!important;transition:background .15s,color .15s!important;font-family:'Open Sans',sans-serif!important;text-decoration:none!important}
+.mobile-nav-item i{color:#f0c040!important;width:18px!important;text-align:center!important}
+.mobile-nav-item:hover{background:rgba(255,255,255,.07)!important;color:#f0c040!important}
+.mobile-menu-footer{padding:20px 24px!important;border-top:1px solid rgba(255,255,255,.1)!important}
+@media(max-width:860px){
+  nav{display:none!important}
+  .burger-btn{display:flex!important}
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbar-left">
+      <span><i class="fas fa-map-marker-alt"></i> ул. Просвещения, 1, г. Ташкент</span>
+      <span><i class="fas fa-envelope"></i> school1@edu.uz</span>
+      <span><i class="fas fa-phone"></i> +998 71 123-45-67</span>
+    </div>
+    <div class="topbar-right">
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-telegram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-wrap">
+    <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">
+      <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
+      <span class="logo-name">ШКОЛА №1</span>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Поиск по сайту..."/>
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <button class="burger-btn" id="burgerBtn" title="Открыть меню"><i class="fas fa-bars"></i></button>
+
+    <nav>
+      <div class="nav-item">
+        <a href="index.html">Главная</a>
+      </div>
+      <div class="nav-item">
+        <a href="teachers.html">Страницы <i class="fas fa-chevron-down arr"></i></a>
+        <div class="dropdown">
+          <a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i>Наши учителя</a>
+          <a href="about.html"><i class="fas fa-info-circle"></i>О школе</a>
+          <a href="contact.html"><i class="fas fa-envelope"></i>Контакты</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="activity.html">Деятельность <i class="fas fa-chevron-down arr"></i></a>
+        <div class="dropdown">
+          <a href="activity-sports.html"><i class="fas fa-futbol"></i>Спортивные секции</a>
+          <a href="activity-creative.html"><i class="fas fa-palette"></i>Творческие кружки</a>
+          <a href="activity-science.html"><i class="fas fa-microscope"></i>Научный клуб</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="news.html">Новости <i class="fas fa-chevron-down arr"></i></a>
+        <div class="dropdown">
+          <a href="news.html"><i class="fas fa-newspaper"></i>Все новости</a>
+          <a href="events.html"><i class="fas fa-calendar-day"></i>Предстоящие мероприятия</a>
+          <a href="announcements.html"><i class="fas fa-bullhorn"></i>Объявления</a>
+        </div>
+      </div>
+      <div class="nav-item active">
+        <a href="contact.html">Контакты <i class="fas fa-chevron-down arr"></i></a>
+        <div class="dropdown">
+          <a href="contact.html"><i class="fas fa-map-marker-alt"></i>Адрес и схема</a>
+          <a href="contact.html"><i class="fas fa-user-tie"></i>Администрация</a>
+          <a href="contact.html"><i class="fas fa-envelope-open-text"></i>Написать нам</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+  <div class="mobile-menu-panel">
+    <div class="mobile-menu-header">
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">
+        <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
+        <span class="logo-name">ШКОЛА №1</span>
+      </div>
+      <button class="mobile-menu-close" id="mobileMenuClose"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="mobile-nav">
+      <a class="mobile-nav-item" href="index.html"><i class="fas fa-home"></i> Главная</a>
+      <a class="mobile-nav-item" href="about.html"><i class="fas fa-info-circle"></i> О школе</a>
+      <a class="mobile-nav-item" href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Учителя</a>
+      <a class="mobile-nav-item" href="activity.html"><i class="fas fa-futbol"></i> Деятельность</a>
+      <a class="mobile-nav-item" href="news.html"><i class="fas fa-newspaper"></i> Новости</a>
+      <a class="mobile-nav-item" href="events.html"><i class="fas fa-calendar-day"></i> Мероприятия</a>
+      <a class="mobile-nav-item" href="announcements.html"><i class="fas fa-bullhorn"></i> Объявления</a>
+      <a class="mobile-nav-item" href="contact.html"><i class="fas fa-envelope"></i> Контакты</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:8px"><i class="fas fa-phone" style="color:#f0c040;margin-right:6px"></i>+998 71 123-45-67</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.6)"><i class="fas fa-envelope" style="color:#f0c040;margin-right:6px"></i>school1@edu.uz</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-hero">
+  <h1>Контакты</h1>
+  <p>Свяжитесь с нами — мы всегда рады ответить на ваши вопросы</p>
+  <div class="breadcrumb">
+    <a href="index.html">Главная</a>
+    <i class="fas fa-chevron-right"></i>
+    <span>Контакты</span>
+  </div>
+</div>
+
+<section class="contact-section">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Наши контакты</h3>
+        <div class="contact-info-item">
+          <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <h5>Адрес</h5>
+            <p>ул. Просвещения, 1<br>г. Ташкент, Узбекистан</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <h5>Телефон</h5>
+            <p>+998 71 123-45-67<br>+998 71 123-45-68 (факс)</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h5>Электронная почта</h5>
+            <p>school1@edu.uz<br>director@school1.edu.uz</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <h5>Часы работы</h5>
+            <p>Пн – Пт: 08:00 – 18:00<br>Сб: 09:00 – 14:00</p>
+          </div>
+        </div>
+        <div style="margin-top:24px;background:#f5f6f8;border-radius:10px;padding:20px;color:#172b4d">
+          <h5 style="font-family:'Raleway',sans-serif;font-size:15px;font-weight:800;margin-bottom:12px">Руководство</h5>
+          <p style="font-size:13px;margin-bottom:8px"><strong>Директор:</strong> Юсупов Бахром Абдуллаевич</p>
+          <p style="font-size:13px;margin-bottom:8px"><strong>Завуч:</strong> Сидорова Ирина Петровна</p>
+          <p style="font-size:13px"><strong>Секретарь:</strong> Нурова Дилноза Акбаровна</p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Написать нам</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Иван Иванов"/>
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="text" placeholder="+998 XX XXX-XX-XX"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Электронная почта</label>
+          <input type="email" placeholder="example@mail.com"/>
+        </div>
+        <div class="form-group">
+          <label>Тема обращения</label>
+          <select title="Тема обращения">
+            <option>Приём в школу</option>
+            <option>Вопрос об обучении</option>
+            <option>Внеурочная деятельность</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Сообщение</label>
+          <textarea placeholder="Опишите ваш вопрос..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">Отправить сообщение</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Школа №1</h3>
+      <div class="f-line"></div>
+      <ul>
+        <li><a href="about.html">О школе</a></li>
+        <li><a href="teachers.html">Учителя</a></li>
+        <li><a href="news.html">Новости</a></li>
+        <li><a href="contact.html">Контакты</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <div class="f-line"></div>
+      <div class="footer-contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <div class="fc-label">Адрес:</div>
+          <div class="fc-val">ул. Просвещения, 1, Ташкент</div>
+        </div>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <div class="fc-label">Телефон:</div>
+          <div class="fc-val">+998 71 123-45-67</div>
+        </div>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <div class="fc-label">E-mail:</div>
+          <div class="fc-val">school1@edu.uz</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col footer-newsletter">
+      <h3>Новости на почту</h3>
+      <div class="f-line"></div>
+      <p>Подпишитесь, чтобы получать последние новости и объявления школы.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Ваш e-mail"/>
+        <button>Подписаться</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom-social">
+    <div class="wrap">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-telegram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom-bar">
+    <div class="wrap">
+      <div class="footer-logo">
+        <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
+        <span class="footer-logo-name">ШКОЛА №1</span>
+      </div>
+      <div class="footer-copy">© 2026 Школа №1. Все права защищены.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Burger Menu
+document.addEventListener('DOMContentLoaded', function() {
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', function() {
+      mobileMenu.classList.add('open');
+    });
+  }
+  if (mobileMenuClose && mobileMenu) {
+    mobileMenuClose.addEventListener('click', function() {
+      mobileMenu.classList.remove('open');
+    });
+    mobileMenu.addEventListener('click', function(e) {
+      if (e.target === mobileMenu) mobileMenu.classList.remove('open');
+    });
+  }
+
+  // Scroll Top
+  var scrollEl = document.getElementById('scrollTop');
+  if (scrollEl) {
+    window.addEventListener('scroll', function() {
+      scrollEl.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+  }
+});
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function submitForm() {
+  showToast('✓ Сообщение отправлено! Мы ответим вам в течение 24 часов.');
+}
+</script>
+</body>
+</html>

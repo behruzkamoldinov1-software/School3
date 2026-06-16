@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Кружок — Школа №1</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;color:#444;background:#f8f9fb;font-size:14px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.topbar{background:#172b4d;color:#ccc;font-size:13px;padding:9px 0}
+.topbar .wrap,.header-wrap,.content{max-width:1200px;margin:auto;padding:0 20px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center}.topbar-left{display:flex;gap:20px}.topbar i{color:#f0c040}.socials{display:flex;gap:8px}
+header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.header-wrap{height:68px;display:flex;align-items:center;gap:16px}.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}.logo-circle{width:40px;height:40px;background:#172b4d;border-radius:50%;display:flex;align-items:center;justify-content:center}.logo-circle i{color:#f0c040}.logo-name{font-family:'Raleway',sans-serif;font-size:20px;font-weight:900;color:#172b4d}.search-box{display:flex;border:1px solid #ddd;border-radius:4px;overflow:hidden;flex:0 0 240px}.search-box input{border:none;outline:none;padding:7px 12px;width:100%;font-family:'Open Sans',sans-serif}.search-box button{background:#f0c040;color:#fff;border:none;padding:7px 12px}
+nav{display:flex;align-items:center;flex:1}.nav-item{position:relative}.nav-item>a{height:68px;display:flex;align-items:center;gap:4px;padding:0 13px;font-weight:600;font-size:13px;color:#333}.nav-item.active>a,.nav-item>a:hover{color:#f0c040}.nav-item.active>a{border-bottom:3px solid #f0c040}.dropdown{position:absolute;top:68px;left:0;background:#fff;min-width:210px;box-shadow:0 8px 30px rgba(0,0,0,.12);border-top:3px solid #f0c040;border-radius:0 0 6px 6px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .22s}.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}.dropdown a{display:block;padding:11px 18px;font-size:13px;font-weight:600;border-bottom:1px solid #f5f5f5}.dropdown a:hover{background:#f8f4e8;color:#f0c040}.dropdown i{color:#f0c040;margin-right:8px;width:14px}
+.hero{background:linear-gradient(135deg,#172b4d,#1e3a6e);padding:54px 20px;color:#fff}.hero .inner{max-width:1200px;margin:auto}.hero .label{display:inline-flex;gap:8px;align-items:center;color:#f0c040;font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1px;margin-bottom:12px}.hero h1{font-family:'Raleway',sans-serif;font-size:40px;font-weight:900;margin-bottom:12px}.hero p{max-width:680px;color:rgba(255,255,255,.78);line-height:1.7}
+.content{padding:54px 20px}.layout{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:start}.panel{background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.07)}.panel h2{font-family:'Raleway',sans-serif;color:#172b4d;font-size:22px;margin-bottom:14px}.panel p,.panel li{line-height:1.75;color:#555}.panel ul{padding-left:18px;margin-top:8px}.info-grid{display:grid;gap:14px}.info{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid #eee;padding-bottom:14px}.info:last-child{border-bottom:none;padding-bottom:0}.info i{width:34px;height:34px;border-radius:8px;background:#fff3cd;color:#d4a800;display:flex;align-items:center;justify-content:center;flex-shrink:0}.info strong{display:block;color:#172b4d;margin-bottom:2px}.back{display:inline-flex;gap:8px;align-items:center;margin-bottom:24px;color:#172b4d;font-weight:700}.back:hover{color:#f0c040}.btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:#f0c040;color:#fff;padding:12px 22px;border-radius:4px;font-weight:800;text-transform:uppercase;font-size:12px}
+.burger-btn{display:none;background:none;border:none;cursor:pointer;color:#172b4d;font-size:20px;padding:8px;margin-left:auto}
+.mobile-menu-overlay{display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.5)}
+.mobile-menu-overlay.open{display:block}
+.mobile-menu-panel{position:absolute;top:0;left:0;bottom:0;width:min(320px,88vw);background:#172b4d;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.mobile-menu-overlay.open .mobile-menu-panel{transform:translateX(0)}
+.mobile-menu-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.mobile-menu-header .logo-name{color:#fff}.mobile-menu-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:6px}
+.mobile-nav{display:flex;flex-direction:column;padding:16px 0}.mobile-nav a{display:flex;align-items:center;gap:12px;padding:14px 24px;color:rgba(255,255,255,.82);font-weight:600;border-bottom:1px solid rgba(255,255,255,.07)}.mobile-nav i{color:#f0c040;width:18px}
+footer{background:#172b4d;color:rgba(255,255,255,.65);text-align:center;padding:24px 20px}
+@media(max-width:860px){.topbar-left,.search-box,nav{display:none}.burger-btn{display:block}.hero h1{font-size:28px}.layout{grid-template-columns:1fr}.panel{padding:22px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="topbar-left"><span><i class="fas fa-map-marker-alt"></i> ул. Просвещения, 1, г. Ташкент</span><span><i class="fas fa-envelope"></i> school1@edu.uz</span><span><i class="fas fa-phone"></i> +998 71 123-45-67</span></div><div class="socials"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div></div>
+<header><div class="header-wrap"><div class="logo" onclick="window.location.href='index.html'"><div class="logo-circle"><i class="fas fa-graduation-cap"></i></div><span class="logo-name">ШКОЛА №1</span></div><div class="search-box"><input type="text" placeholder="Поиск по сайту..."/><button><i class="fas fa-search"></i></button></div><button class="burger-btn" id="burgerBtn" title="Открыть меню"><i class="fas fa-bars"></i></button><nav><div class="nav-item"><a href="index.html">Главная</a></div><div class="nav-item"><a href="about.html">О нас <i class="fas fa-chevron-down arr"></i></a><div class="dropdown"><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i>Наши учителя</a><a href="about.html"><i class="fas fa-info-circle"></i>О школе</a></div></div><div class="nav-item active"><a href="activity.html">Деятельность <i class="fas fa-chevron-down arr"></i></a><div class="dropdown"><a href="activity-sports.html"><i class="fas fa-futbol"></i>Спортивные секции</a><a href="activity-creative.html"><i class="fas fa-palette"></i>Творческие кружки</a><a href="activity-science.html"><i class="fas fa-microscope"></i>Научный клуб</a></div></div><div class="nav-item"><a href="news.html">Новости <i class="fas fa-chevron-down arr"></i></a><div class="dropdown"><a href="news.html"><i class="fas fa-newspaper"></i>Все новости</a><a href="news.html"><i class="fas fa-calendar-day"></i>Предстоящие мероприятия</a><a href="news.html"><i class="fas fa-bullhorn"></i>Объявления</a></div></div><div class="nav-item"><a href="contact.html">Контакты <i class="fas fa-chevron-down arr"></i></a><div class="dropdown"><a href="contact.html"><i class="fas fa-map-marker-alt"></i>Адрес и схема</a><a href="contact.html"><i class="fas fa-user-tie"></i>Администрация</a><a href="contact.html"><i class="fas fa-envelope-open-text"></i>Написать нам</a></div></div></nav></div></header>
+<div class="mobile-menu-overlay" id="mobileMenu"><div class="mobile-menu-panel"><div class="mobile-menu-header"><div class="logo" onclick="window.location.href='index.html'"><div class="logo-circle"><i class="fas fa-graduation-cap"></i></div><span class="logo-name">ШКОЛА №1</span></div><button class="mobile-menu-close" id="mobileMenuClose"><i class="fas fa-times"></i></button></div><div class="mobile-nav"><a href="index.html"><i class="fas fa-home"></i>Главная</a><a href="about.html"><i class="fas fa-info-circle"></i>О школе</a><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i>Учителя</a><a href="activity.html"><i class="fas fa-futbol"></i>Деятельность</a><a href="activity-sports.html"><i class="fas fa-running"></i>Спорт</a><a href="activity-creative.html"><i class="fas fa-palette"></i>Творчество</a><a href="activity-science.html"><i class="fas fa-microscope"></i>Наука</a><a href="news.html"><i class="fas fa-newspaper"></i>Новости</a><a href="contact.html"><i class="fas fa-envelope"></i>Контакты</a></div></div></div>
+<section class="hero"><div class="inner"><div class="label" id="sectionLabel"><i class="fas fa-star"></i> Деятельность</div><h1 id="title">Кружок</h1><p id="intro">Подробная информация о школьном кружке.</p></div></section>
+<main class="content">
+  <a class="back" id="backLink" href="activity.html"><i class="fas fa-arrow-left"></i> Назад к разделу</a>
+  <div class="layout">
+    <section class="panel">
+      <h2>Что делают на занятиях</h2>
+      <p id="description"></p>
+      <h2 style="margin-top:24px">Зачем это нужно</h2>
+      <ul id="benefits"></ul>
+      <a class="btn" href="contact.html"><i class="fas fa-envelope"></i> Записаться</a>
+    </section>
+    <aside class="panel">
+      <h2>Информация</h2>
+      <div class="info-grid">
+        <div class="info"><i class="fas fa-users"></i><div><strong>Классы</strong><span id="grades"></span></div></div>
+        <div class="info"><i class="fas fa-calendar-alt"></i><div><strong>Расписание</strong><span id="schedule"></span></div></div>
+        <div class="info"><i class="fas fa-map-marker-alt"></i><div><strong>Где проходит</strong><span id="place"></span></div></div>
+        <div class="info"><i class="fas fa-user-tie"></i><div><strong>Руководитель</strong><span id="teacher"></span></div></div>
+      </div>
+    </aside>
+  </div>
+</main>
+<footer>© 2026 Школа №1. Все права защищены.</footer>
+<script>
+const activities = {
+  athletics:{section:'Спортивные секции',back:'activity-sports.html',title:'Лёгкая атлетика',intro:'Секция для развития скорости, выносливости и уверенности в соревнованиях.',description:'На занятиях ученики работают над техникой бега, стартом, прыжками в длину, эстафетами и общей физической подготовкой. Тренировки помогают подготовиться к школьной спартакиаде и городским соревнованиям.',benefits:['укрепляет здоровье и дисциплину','развивает выносливость и координацию','помогает ученикам выступать на соревнованиях'],grades:'4–11 классы',schedule:'вторник, четверг, суббота — 15:30',place:'школьный стадион',teacher:'учитель физкультуры Рустам Абдуллаев'},
+  volleyball:{section:'Спортивные секции',back:'activity-sports.html',title:'Волейбол',intro:'Командная секция для тех, кто любит динамичную игру и спортивное общение.',description:'Ученики изучают подачу, приём мяча, передачу, блок, командное взаимодействие и правила игры. Лучшие участники входят в школьную сборную.',benefits:['учит работать в команде','развивает реакцию и координацию','готовит к школьным и городским матчам'],grades:'5–11 классы',schedule:'понедельник, среда, пятница — 16:00',place:'спортивный зал',teacher:'тренер Дилшод Каримов'},
+  football:{section:'Спортивные секции',back:'activity-sports.html',title:'Футбол',intro:'Мини-футзал для развития техники, тактики и командного духа.',description:'На тренировках проходят разминку, упражнения на владение мячом, удары, передачи, тактические схемы и учебные матчи. Секция подходит ученикам, которые хотят играть за школьную команду.',benefits:['улучшает физическую форму','учит тактическому мышлению','даёт опыт командных соревнований'],grades:'5–9 классы',schedule:'вторник, четверг, пятница — 16:30',place:'мини-футбольная площадка',teacher:'учитель физкультуры Бахтиёр Саидов'},
+  chess:{section:'Спортивные секции',back:'activity-sports.html',title:'Шахматы',intro:'Интеллектуальная секция для развития логики, внимания и стратегии.',description:'Ученики изучают дебюты, тактические приёмы, эндшпиль, решают шахматные задачи и проводят учебные турниры. Занятия подходят и начинающим, и опытным игрокам.',benefits:['развивает память и концентрацию','учит планировать несколько ходов вперёд','готовит к интеллектуальным турнирам'],grades:'1–11 классы',schedule:'понедельник, среда — 15:00',place:'кабинет №18',teacher:'педагог дополнительного образования Нодира Ахмедова'},
+  theater:{section:'Творческие кружки',back:'activity-creative.html',title:'Театральная студия',intro:'Кружок сценической речи, актёрского мастерства и школьных постановок.',description:'Участники работают над дикцией, пластикой, эмоциями, чтением ролей и подготовкой спектаклей к школьным праздникам. Студия помогает детям увереннее выступать перед аудиторией.',benefits:['развивает речь и уверенность','учит работать с образом и текстом','помогает выступать на сцене'],grades:'4–9 классы',schedule:'вторник, четверг — 15:30',place:'актовый зал',teacher:'педагог Саида Юсупова'},
+  art:{section:'Творческие кружки',back:'activity-creative.html',title:'Изостудия',intro:'Рисунок, живопись и декоративные проекты для школьных выставок.',description:'Ученики осваивают карандашный рисунок, акварель, гуашь, композицию, работу с цветом и декоративно-прикладное искусство. Работы участвуют в школьных выставках.',benefits:['развивает вкус и наблюдательность','учит выражать идеи визуально','готовит портфолио творческих работ'],grades:'1–8 классы',schedule:'понедельник, среда — 14:30',place:'кабинет ИЗО',teacher:'учитель ИЗО Малика Турсунова'},
+  choir:{section:'Творческие кружки',back:'activity-creative.html',title:'Хор и музыка',intro:'Вокальные занятия, ансамбль и участие в школьных концертах.',description:'Кружок включает распевки, работу над дыханием, изучение песен на русском и узбекском языках, ансамблевое пение и подготовку праздничных программ.',benefits:['развивает слух и голос','учит выступать в коллективе','создаёт программу для школьных мероприятий'],grades:'1–11 классы',schedule:'среда, пятница — 15:00',place:'музыкальный кабинет',teacher:'музыкальный руководитель Гулнора Алиева'},
+  media:{section:'Творческие кружки',back:'activity-creative.html',title:'Фото и видео',intro:'Школьная медиакоманда для съёмки событий, монтажа и репортажей.',description:'Ученики изучают основы композиции, работу с камерой, съёмку интервью, монтаж коротких роликов и подготовку фотоотчётов для школьных новостей.',benefits:['даёт практические медианавыки','учит рассказывать истории через кадр','помогает вести школьные события'],grades:'6–11 классы',schedule:'пятница — 15:30',place:'медиакабинет',teacher:'педагог информатики Тимур Валиев'},
+  robotics:{section:'Научный клуб',back:'activity-science.html',title:'Робототехника',intro:'Инженерный кружок для конструирования и программирования роботов.',description:'Участники собирают модели, подключают датчики, изучают алгоритмы движения и готовят проекты для школьных инженерных конкурсов.',benefits:['развивает инженерное мышление','соединяет математику и программирование','готовит к техническим конкурсам'],grades:'5–10 классы',schedule:'вторник, четверг — 16:00',place:'кабинет информатики',teacher:'учитель информатики Ойбек Рахимов'},
+  chemistry:{section:'Научный клуб',back:'activity-science.html',title:'Юный химик',intro:'Безопасные опыты, лабораторная культура и олимпиадная подготовка.',description:'На занятиях ученики проводят демонстрационные и учебные опыты, изучают свойства веществ, учатся вести наблюдения и оформлять результаты экспериментов.',benefits:['развивает исследовательский подход','учит безопасной работе в лаборатории','помогает готовиться к олимпиадам'],grades:'8–11 классы',schedule:'среда — 15:30',place:'кабинет химии',teacher:'учитель химии Феруза Нурматова'},
+  programming:{section:'Научный клуб',back:'activity-science.html',title:'Программирование',intro:'Python, веб-разработка, алгоритмы и школьные IT-проекты.',description:'Ученики изучают основы Python, HTML, CSS, алгоритмические задачи и создают небольшие проекты: сайты, викторины, калькуляторы и учебные приложения.',benefits:['развивает логическое мышление','даёт практические цифровые навыки','готовит к олимпиадам и проектам'],grades:'6–11 классы',schedule:'понедельник, четверг — 15:30',place:'компьютерный класс',teacher:'учитель информатики Тимур Валиев'},
+  geography:{section:'Научный клуб',back:'activity-science.html',title:'Географический клуб',intro:'Карты, экология, исследования города и школьные проекты.',description:'Клуб работает с картами, природными зонами, экологическими наблюдениями и мини-исследованиями о Ташкенте и Узбекистане. Ученики готовят доклады и проекты.',benefits:['расширяет знания о мире и родном крае','учит работать с картами и данными','развивает проектное мышление'],grades:'6–9 классы',schedule:'среда — 14:30',place:'кабинет географии',teacher:'учитель географии Азиза Камалова'}
+};
+const id = new URLSearchParams(location.search).get('id') || 'athletics';
+const item = activities[id] || activities.athletics;
+document.title = item.title + ' — Школа №1';
+document.getElementById('sectionLabel').innerHTML = '<i class="fas fa-star"></i> ' + item.section;
+document.getElementById('title').textContent = item.title;
+document.getElementById('intro').textContent = item.intro;
+document.getElementById('description').textContent = item.description;
+document.getElementById('benefits').innerHTML = item.benefits.map(text => '<li>'+text+'</li>').join('');
+document.getElementById('grades').textContent = item.grades;
+document.getElementById('schedule').textContent = item.schedule;
+document.getElementById('place').textContent = item.place;
+document.getElementById('teacher').textContent = item.teacher;
+document.getElementById('backLink').href = item.back;
+const burgerBtn=document.getElementById('burgerBtn');
+const mobileMenu=document.getElementById('mobileMenu');
+const mobileMenuClose=document.getElementById('mobileMenuClose');
+if(burgerBtn&&mobileMenu)burgerBtn.addEventListener('click',()=>mobileMenu.classList.add('open'));
+if(mobileMenuClose&&mobileMenu)mobileMenuClose.addEventListener('click',()=>mobileMenu.classList.remove('open'));
+if(mobileMenu)mobileMenu.addEventListener('click',e=>{if(e.target===mobileMenu)mobileMenu.classList.remove('open')});
+</script>
+</body>
+</html>
